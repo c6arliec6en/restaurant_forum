@@ -23,6 +23,8 @@ module.exports = (app, passport) => {
 
   app.get('/admin', isAdminAuthenticate, (req, res) => res.redirect('admin/restaurants'))
   app.get('/admin/restaurants', isAdminAuthenticate, adminController.getRestaurants)
+  app.get('/admin/restaurants/create', isAdminAuthenticate, adminController.createRestaurant)
+  app.post('/admin/restaurants', isAdminAuthenticate, adminController.postRestaurant)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
