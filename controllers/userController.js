@@ -21,7 +21,7 @@ const userControllers = {
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
           }).then(user => {
-            req.flash('ssuccess_messages', '註冊成功')
+            req.flash('success_messages', '註冊成功')
             return res.redirect('/signin')
           })
         }
@@ -29,6 +29,19 @@ const userControllers = {
       })
     }
 
+  },
+
+  singInPage: (req, res) => {
+    return res.render('signin')
+  },
+  signIn: (req, res) => {
+    req.flash('success_messages', '成功登入')
+    return res.redirect('/')
+  },
+  logOut: (req, res) => {
+    req.flash('success_messages', '成功登出')
+    req.logout()
+    return res.render('signin')
   }
 }
 
