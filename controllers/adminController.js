@@ -1,5 +1,6 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
+const User = db.User
 
 const adminControllers = {
   getRestaurants: (req, res) => {
@@ -59,6 +60,42 @@ const adminControllers = {
       })
     })
 
+  },
+
+  deleteRestaurant: (req, res) => {
+    return Restaurant.findByPk(req.params.id)
+      .then((restaurant) => {
+        restaurant.destroy()
+          .then((restaurant) => {
+            res.redirect('/admin/restaurants')
+          })
+      })
+  },
+
+  getUsers: (req, res) => {
+    User.findAll().then(users => {
+      return res.render('admin/users', { users: users })
+    })
+  },
+
+  setPermission: (req, res) => {
+    User.findByPk(req.params.id).then(user => {
+      if (!user.isAdmin) {
+        console.log('false!')
+        user.update({
+          isAdmin: true
+        }).then(user => {
+          return res.redirect('/admin/users')
+        })
+      } else {
+        user.update({
+          isAdmin: false
+        }).then(user => {
+          return res.redirect('/admin/users')
+        })
+      }
+
+    })
   }
 }
 
