@@ -2,7 +2,11 @@ const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 
+
 module.exports = (app, passport) => {
+
+  const multer = require('multer')
+  const upload = multer({ dest: 'temp/' })
 
   const authenticate = (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -24,10 +28,10 @@ module.exports = (app, passport) => {
   app.get('/admin', isAdminAuthenticate, (req, res) => res.redirect('admin/restaurants'))
   app.get('/admin/restaurants', isAdminAuthenticate, adminController.getRestaurants)
   app.get('/admin/restaurants/create', isAdminAuthenticate, adminController.createRestaurant)
-  app.post('/admin/restaurants', isAdminAuthenticate, adminController.postRestaurant)
+  app.post('/admin/restaurants', isAdminAuthenticate, upload.single('image'), adminController.postRestaurant)
   app.get('/admin/restaurants/:id', isAdminAuthenticate, adminController.getRestaurant)
   app.get('/admin/restaurants/:id/edit', isAdminAuthenticate, adminController.editRestaurant)
-  app.put('/admin/restaurants/:id/', isAdminAuthenticate, adminController.putRestaurant)
+  app.put('/admin/restaurants/:id/', isAdminAuthenticate, upload.single('image'), adminController.putRestaurant)
   app.delete('/admin/restaurants/:id', isAdminAuthenticate, adminController.deleteRestaurant)
 
   app.get('/admin/users', isAdminAuthenticate, adminController.getUsers)
