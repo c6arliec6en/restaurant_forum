@@ -14,7 +14,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.set('view engine', 'handlebars')
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
+}))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
   secret: 'Hello',
