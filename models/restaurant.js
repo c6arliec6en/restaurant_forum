@@ -12,4 +12,4 @@ module.exports = (sequelize, DataTypes) => {
     Restaurant.belongsTo(models.Category)
   };
   return Restaurant;
-};
+};  
