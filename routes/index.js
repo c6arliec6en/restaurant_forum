@@ -1,6 +1,7 @@
 const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
+const categoryController = require('../controllers/categoryController')
 
 
 module.exports = (app, passport) => {
@@ -24,6 +25,7 @@ module.exports = (app, passport) => {
 
   app.get('/', authenticate, (req, res) => res.redirect('/restaurants'))
   app.get('/restaurants', authenticate, restController.getRestaurants)
+  app.get('/restaurants/:id', authenticate, restController.getRestaurant)
 
   app.get('/admin', isAdminAuthenticate, (req, res) => res.redirect('admin/restaurants'))
   app.get('/admin/restaurants', isAdminAuthenticate, adminController.getRestaurants)
@@ -33,6 +35,12 @@ module.exports = (app, passport) => {
   app.get('/admin/restaurants/:id/edit', isAdminAuthenticate, adminController.editRestaurant)
   app.put('/admin/restaurants/:id/', isAdminAuthenticate, upload.single('image'), adminController.putRestaurant)
   app.delete('/admin/restaurants/:id', isAdminAuthenticate, adminController.deleteRestaurant)
+
+  app.get('/admin/categories', isAdminAuthenticate, categoryController.getCategories)
+  app.post('/admin/categories', isAdminAuthenticate, categoryController.postCategory)
+  app.get('/admin/categories/:id', isAdminAuthenticate, categoryController.getCategories)
+  app.put('/admin/categories/:id/edit', isAdminAuthenticate, categoryController.putCategory)
+  app.delete('/admin/categories/:id', isAdminAuthenticate, categoryController.deleteCategory)
 
   app.get('/admin/users', isAdminAuthenticate, adminController.getUsers)
   app.get('/admin/users/:id/permission', isAdminAuthenticate, adminController.setPermission)
