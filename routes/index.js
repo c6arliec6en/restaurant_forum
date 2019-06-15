@@ -2,6 +2,7 @@ const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
+const commentController = require('../controllers/commentController')
 
 
 module.exports = (app, passport) => {
@@ -26,6 +27,8 @@ module.exports = (app, passport) => {
   app.get('/', authenticate, (req, res) => res.redirect('/restaurants'))
   app.get('/restaurants', authenticate, restController.getRestaurants)
   app.get('/restaurants/:id', authenticate, restController.getRestaurant)
+
+  app.post('/comments', authenticate, commentController.postComment)
 
   app.get('/admin', isAdminAuthenticate, (req, res) => res.redirect('admin/restaurants'))
   app.get('/admin/restaurants', isAdminAuthenticate, adminController.getRestaurants)
