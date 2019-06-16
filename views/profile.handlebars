@@ -6,7 +6,7 @@
     <li class="list-unstyled">
       <ul><span>{{user.name}}</span></ul>
       <ul><span>{{user.email}}</span></ul>
-      {{#ifCond user.id searchBarUserId}}
+      {{#ifCond nowYourId searchBarUserId}}
       <ul><a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a></ul>
       {{/ifCond}}
     </li>

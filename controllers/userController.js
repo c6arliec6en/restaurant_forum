@@ -49,8 +49,9 @@ const userControllers = {
 
   getUser: (req, res) => {
     const searchBarUserId = Number(req.params.id)
+    const nowYourId = Number(req.user.id)
     User.findByPk(req.params.id).then(user => {
-      res.render('profile', { user: user, searchBarUserId: searchBarUserId })
+      res.render('profile', { user: user, searchBarUserId: searchBarUserId, nowYourId: nowYourId })
     })
   },
 
