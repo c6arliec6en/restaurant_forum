@@ -11,7 +11,7 @@ module.exports = {
       name: 'root',
       createdAt: new Date(),
       updatedAt: new Date(),
-      image: 'ac.png'
+      image: 'https://picsum.photos/600'
     }, {
       email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -19,7 +19,7 @@ module.exports = {
       name: 'user1',
       createdAt: new Date(),
       updatedAt: new Date(),
-      image: 'ac.png'
+      image: 'https://picsum.photos/600'
     }, {
       email: 'user2@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -27,7 +27,7 @@ module.exports = {
       name: 'user2',
       createdAt: new Date(),
       updatedAt: new Date(),
-      image: 'ac.png'
+      image: 'https://picsum.photos/600'
     }], {})
 
     queryInterface.bulkInsert('Categories', ['中式料理', '日本料理', '義大利料理', '墨西哥料理', '素食料理', '美式料理', '複合式料理']
@@ -47,7 +47,7 @@ module.exports = {
           tel: faker.phone.phoneNumber(),
           address: faker.address.streetAddress(),
           opening_hours: '08:00',
-          image: faker.image.imageUrl(),
+          image: 'https://picsum.photos/640/480',
           description: faker.lorem.text(),
           createdAt: new Date(),
           updatedAt: new Date(),

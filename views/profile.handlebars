@@ -1,14 +1,25 @@
 <div class="row justify-content-center">
   <div class="col-md-10 border row">
     <div class="col-6">
-      <img src="/upload/{{user.image}}" alt="" class="col-12">
+      <img src="{{user.image}}" alt="" class="col-12">
     </div>
     <li class="list-unstyled">
       <ul><span>{{user.name}}</span></ul>
       <ul><span>{{user.email}}</span></ul>
+      <ul><span>{{commentCount}} 已評論餐廳</span></ul>
       {{#ifCond nowYourId searchBarUserId}}
       <ul><a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a></ul>
       {{/ifCond}}
     </li>
+  </div>
+
+  <div class="border col-md-10 mt-2">
+    <span>{{commentCount}} 已評論餐廳</span>
+  </div>
+  <div class="border border-top-0 col-md-10 row">
+    {{#each user.Comments}}
+    <div class="col-md-2 mt-4 mb-4"><a href="/restaurants/{{this.Restaurant.id}}"><img src="{{this.Restaurant.image}}"
+          alt="" class="col-12"></a></div>
+    {{/each}}
   </div>
 </div>
