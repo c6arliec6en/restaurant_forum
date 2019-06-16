@@ -3,12 +3,21 @@ const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
 const commentController = require('../controllers/commentController')
+const multer = require('multer')
+const storage = multer.diskStorage({
+  destination: (req, file, done) => {
+    done(null, './upload')
+  },
+  filename: (req, file, done) => {
+    done(null, `${Date.now()}-${file.originalname}`)
+  }
+})
+const upload = multer({ storage: storage })
 
 
 module.exports = (app, passport) => {
 
-  const multer = require('multer')
-  const upload = multer({ dest: 'temp/' })
+
 
   const authenticate = (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -29,6 +38,11 @@ module.exports = (app, passport) => {
   app.get('/restaurants/:id', authenticate, restController.getRestaurant)
 
   app.post('/comments', authenticate, commentController.postComment)
+  app.delete('/comments/:id', isAdminAuthenticate, commentController.deleteComment)
+
+  app.get('/users/:id', authenticate, userController.getUser)
+  app.get('/users/:id/edit', authenticate, userController.editUser)
+  app.put('/users/:id', authenticate, upload.single('image'), userController.putUser)
 
   app.get('/admin', isAdminAuthenticate, (req, res) => res.redirect('admin/restaurants'))
   app.get('/admin/restaurants', isAdminAuthenticate, adminController.getRestaurants)

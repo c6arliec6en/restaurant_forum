@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
+const fs = require('fs')
+
+
 const userControllers = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -42,6 +45,33 @@ const userControllers = {
     req.flash('success_messages', '成功登出')
     req.logout()
     return res.render('signin')
+  },
+
+  getUser: (req, res) => {
+    const searchBarUserId = Number(req.params.id)
+    User.findByPk(req.params.id).then(user => {
+      res.render('profile', { user: user, searchBarUserId: searchBarUserId })
+    })
+  },
+
+  editUser: (req, res) => {
+    User.findByPk(req.params.id).then(user => {
+      console.log(req.user)
+      res.render('edituser', { user: user })
+    })
+  },
+
+  putUser: (req, res) => {
+    User.findByPk(req.params.id).then(user => {
+
+      user.update({
+        name: req.body.name,
+        image: req.file ? req.file.filename : user.image
+      }).then(user => {
+        req.flash('success_messages', 'Edit user successfully')
+        return res.redirect(`/users/${user.id}`)
+      })
+    })
   }
 }
 

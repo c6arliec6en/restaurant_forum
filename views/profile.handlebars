@@ -1,0 +1,14 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 border row">
+    <div class="col-6">
+      <img src="/upload/{{user.image}}" alt="" class="col-12">
+    </div>
+    <li class="list-unstyled">
+      <ul><span>{{user.name}}</span></ul>
+      <ul><span>{{user.email}}</span></ul>
+      {{#ifCond user.id searchBarUserId}}
+      <ul><a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a></ul>
+      {{/ifCond}}
+    </li>
+  </div>
+</div>
