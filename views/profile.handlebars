@@ -7,7 +7,7 @@
       <ul><span>{{user.name}}</span></ul>
       <ul><span>{{user.email}}</span></ul>
       <ul><span>{{commentCount}} 已評論餐廳</span></ul>
-      {{#ifCond nowYourId searchBarUserId}}
+      {{#ifCond currentUser searchBarUserId}}
       <ul><a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a></ul>
       {{/ifCond}}
     </li>

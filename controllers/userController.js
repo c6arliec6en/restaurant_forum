@@ -52,21 +52,21 @@ const userControllers = {
 
   getUser: (req, res) => {
     const searchBarUserId = Number(req.params.id)
-    const nowYourId = Number(req.user.id)
+    const currentUser = Number(req.user.id)
     User.findByPk(req.params.id, { include: { model: Comment, include: [Restaurant] } }).then(user => {
       let commentCount = 0
       user.Comments.forEach(comment => {
         commentCount += 1
       })
 
-      res.render('profile', { user: user, searchBarUserId: searchBarUserId, nowYourId: nowYourId, commentCount: commentCount })
+      res.render('profile', { user: user, searchBarUserId: searchBarUserId, currentUser: currentUser, commentCount: commentCount })
     })
 
 
   },
 
   editUser: (req, res) => {
-    User.findByPk(req.params.id).then(user => {
+    User.findByPk(req.user.id).then(user => {
       res.render('edituser', { user: user })
     })
   },
