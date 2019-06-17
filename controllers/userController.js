@@ -3,6 +3,8 @@ const db = require('../models')
 const User = db.User
 const Comment = db.Comment
 const Restaurant = db.Restaurant
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = '5d0182421d9b790'
 
 
 const userControllers = {
@@ -70,15 +72,31 @@ const userControllers = {
   },
 
   putUser: (req, res) => {
-    User.findByPk(req.params.id).then(user => {
-      user.update({
-        name: req.body.name,
-        image: req.file ? req.file.filename : user.image
-      }).then(user => {
-        req.flash('success_messages', 'Edit user successfully')
-        return res.redirect(`/users/${user.id}`)
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        User.findByPk(req.params.id).then(user => {
+          user.update({
+            name: req.body.name,
+            image: file ? img.data.link : user.image
+          }).then(user => {
+            req.flash('success_messages', 'Edit user successfully')
+            return res.redirect(`/users/${user.id}`)
+          })
+        })
       })
-    })
+    } else {
+      User.findByPk(req.params.id).then(user => {
+        user.update({
+          name: req.body.name,
+          image: user.image
+        }).then(user => {
+          req.flash('success_messages', 'Edit user successfully')
+          return res.redirect(`/users/${user.id}`)
+        })
+      })
+    }
   }
 }
 

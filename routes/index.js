@@ -4,15 +4,16 @@ const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
 const commentController = require('../controllers/commentController')
 const multer = require('multer')
-const storage = multer.diskStorage({
-  destination: (req, file, done) => {
-    done(null, './upload')
-  },
-  filename: (req, file, done) => {
-    done(null, `${Date.now()}-${file.originalname}`)
-  }
-})
-const upload = multer({ storage: storage })
+const upload = multer({ dest: 'temp/' })
+// const storage = multer.diskStorage({
+//   destination: (req, file, done) => {
+//     done(null, './upload')
+//   },
+//   filename: (req, file, done) => {
+//     done(null, `${Date.now()}-${file.originalname}`)
+//   }
+// })
+// const upload = multer({ storage: storage })
 
 
 module.exports = (app, passport) => {
