@@ -54,9 +54,17 @@ const restControllers = {
         return res.render('feeds', { restaurants: restaurants, comments: comments })
       })
     })
+  },
+
+  getRestaurantDashboard: (req, res) => {
+    Restaurant.findByPk(req.params.id, { include: [Comment] }).then(restaurant => {
+      let countComment = 0
+      restaurant.Comments.forEach(a => {
+        countComment += 1
+      })
+      return res.render('dashboard', { countComment: countComment })
+    })
   }
-
-
 }
 
 module.exports = restControllers
