@@ -30,7 +30,8 @@ const restControllers = {
 
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        description: r.dataValues.description.substring(0, 50)
+        description: r.dataValues.description.substring(0, 50),
+        isFavorited: req.user.FavoritedRestaurants.map(a => a.id).includes(r.id)
       })
       )
       Category.findAll().then(categories => {
@@ -41,11 +42,12 @@ const restControllers = {
   },
 
   getRestaurant: (req, res) => {
-    Restaurant.findByPk(req.params.id, { include: [Category, { model: Comment, include: [User] }] }).then(restaurant => {
+    Restaurant.findByPk(req.params.id, { include: [Category, { model: Comment, include: [User] }, { model: User, as: 'FavoritedUsers' }] }).then(restaurant => {
+      const isFavorited = restaurant.FavoritedUsers.map(a => a.id).includes(req.user.id)
       restaurant.update({
         viewCounts: restaurant.viewCounts + 1
       })
-      return res.render('restaurant', { restaurant: restaurant })
+      return res.render('restaurant', { restaurant: restaurant, isFavorited: isFavorited })
     })
   },
 
