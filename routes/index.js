@@ -43,6 +43,7 @@ module.exports = (app, passport) => {
   app.post('/comments', authenticate, commentController.postComment)
   app.delete('/comments/:id', isAdminAuthenticate, commentController.deleteComment)
 
+  app.get('/users/top', authenticate, userController.getTopUser)
   app.get('/users/:id', authenticate, userController.getUser)
   app.get('/users/:id/edit', authenticate, userController.editUser)
   app.put('/users/:id', authenticate, upload.single('image'), userController.putUser)
@@ -51,6 +52,8 @@ module.exports = (app, passport) => {
   app.delete('/favorite/:restaurantId', authenticate, userController.removeFavorite)
   app.post('/like/:id', authenticate, userController.addLike)
   app.delete('/like/:id', authenticate, userController.removeLike)
+  app.post('/following/:userId', authenticate, userController.addFollow)
+  app.delete('/following/:userId', authenticate, userController.removeFollow)
 
   app.get('/admin', isAdminAuthenticate, (req, res) => res.redirect('admin/restaurants'))
   app.get('/admin/restaurants', isAdminAuthenticate, adminController.getRestaurants)
