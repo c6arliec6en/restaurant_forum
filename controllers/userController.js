@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const { User, Comment, Restaurant, Favorite, Like, Followship } = db
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = '5d0182421d9b790'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 
 const userControllers = {
