@@ -57,22 +57,7 @@ const userControllers = {
         { model: Restaurant, as: 'FavoritedRestaurants' }
       ]
     }).then(user => {
-      let commentCount = 0
-      user.Comments.forEach(comment => {
-        commentCount += 1
-      })
-      let followingCount = 0
-      user.Followings.forEach(a => {
-        followingCount += 1
-      })
-      let followerCount = 0
-      user.Followers.forEach(a => {
-        followerCount += 1
-      })
-      let favoritedCount = 0
-      user.FavoritedRestaurants.forEach(a => {
-        favoritedCount += 1
-      })
+
 
       let commentRestaurants = []
       let removeSameObject = {}
@@ -83,7 +68,10 @@ const userControllers = {
         commentRestaurants.push(removeSameObject[i])
       }
 
-      console.log(user.FavoritedRestaurants)
+      const commentCount = commentRestaurants.length
+      const followingCount = user.Followings.length
+      const followerCount = user.Followers.length
+      const favoritedCount = user.FavoritedRestaurants.length
 
       res.render('profile', { user, searchBarUserId, currentUser, commentCount, commentRestaurants, followingCount, followerCount, favoritedCount })
     })
