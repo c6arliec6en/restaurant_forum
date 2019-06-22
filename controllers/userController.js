@@ -29,7 +29,6 @@ const userControllers = {
             return res.redirect('/signin')
           })
         }
-
       })
     }
   },
