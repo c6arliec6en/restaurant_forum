@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
-const {User, Comment, Restaurant, Favorite, Like, Followship} = db
+const { User, Comment, Restaurant, Favorite, Like, Followship } = db
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '5d0182421d9b790'
 
@@ -32,7 +32,6 @@ const userControllers = {
 
       })
     }
-
   },
 
   singInPage: (req, res) => {
@@ -51,11 +50,31 @@ const userControllers = {
   getUser: (req, res) => {
     const searchBarUserId = Number(req.params.id)
     const currentUser = Number(req.user.id)
-    User.findByPk(req.params.id, { include: { model: Comment, include: [Restaurant] } }).then(user => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: Comment, include: [Restaurant] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Restaurant, as: 'FavoritedRestaurants' }
+      ]
+    }).then(user => {
       let commentCount = 0
       user.Comments.forEach(comment => {
         commentCount += 1
       })
+      let followingCount = 0
+      user.Followings.forEach(a => {
+        followingCount += 1
+      })
+      let followerCount = 0
+      user.Followers.forEach(a => {
+        followerCount += 1
+      })
+      let favoritedCount = 0
+      user.FavoritedRestaurants.forEach(a => {
+        favoritedCount += 1
+      })
+
       let commentRestaurants = []
       let removeSameObject = {}
       user.Comments.forEach(a => {
@@ -65,7 +84,9 @@ const userControllers = {
         commentRestaurants.push(removeSameObject[i])
       }
 
-      res.render('profile', { user, searchBarUserId, currentUser, commentCount, commentRestaurants })
+      console.log(user.FavoritedRestaurants)
+
+      res.render('profile', { user, searchBarUserId, currentUser, commentCount, commentRestaurants, followingCount, followerCount, favoritedCount })
     })
 
 

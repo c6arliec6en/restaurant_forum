@@ -7,23 +7,78 @@
       <ul><span>{{user.name}}</span></ul>
       <ul><span>{{user.email}}</span></ul>
       <ul><span>{{commentCount}} 已評論餐廳</span></ul>
+      <ul><span>{{followingCount}} 已追蹤</span></ul>
+      <ul><span>{{followerCount}} 追蹤者</span></ul>
+      <ul><span>{{favoritedCount}} 收藏餐廳</span></ul>
       {{#ifCond currentUser searchBarUserId}}
       <ul><a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a></ul>
       {{/ifCond}}
     </li>
   </div>
-
-  <div class="border col-md-10 mt-2">
-    <span>{{commentCount}} 已評論餐廳</span>
-  </div>
-  <div class="border border-top-0 col-md-10 row">
-    {{#each commentRestaurants}}
-    <div class="col-md-2 mt-4 mb-4 text-center">
-      <a href="/restaurants/{{this.id}}">
-        <img src="{{this.image}}" alt="" class="col-12">
-      </a>
-      <a href="/restaurants/{{this.id}}">{{this.name}}</a>
+  <div class="col-md-10 row justify-content-between p-0">
+    <div class="col-4 mt-2">
+      <div class="border col-12 row">
+        <span>{{followingCount}} Followings(追蹤數)</span>
+      </div>
+      <div class="border border-top-0 col-12 row">
+        {{#each user.Followings}}
+        <div class="col-6 mt-2 mb-2 text-center">
+          <a href="/users/{{this.id}}">
+            <img src="{{this.image}}" alt="" class="col-12">
+          </a>
+          <a href="/restaurants/{{this.id}}">{{this.name}}</a>
+        </div>
+        {{/each}}
+      </div>
     </div>
-    {{/each}}
+    <div class="col-8 mt-2 p-0">
+      <div class="border col-12 row m-0 ">
+        <span>{{commentCount}} 已評論餐廳</span>
+      </div>
+      <div class="border border-top-0  m-0 col-12 row justify-content-center">
+        {{#each commentRestaurants}}
+        <div class="col-md-4 mt-2 mb-2 text-center">
+          <a href="/restaurants/{{this.id}}">
+            <img src="{{this.image}}" alt="" class="col-12">
+          </a>
+          <a href="/restaurants/{{this.id}}">{{this.name}}</a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-10 row justify-content-between p-0">
+    <div class="col-4 mt-2">
+      <div class="border col-12 row">
+        <span>{{followerCount}} Followers(被追蹤)</span>
+      </div>
+      <div class="border border-top-0 col-12 row">
+        {{#each user.Followers}}
+        <div class="col-6 mt-2 mb-2 text-center">
+          <a href="/users/{{this.id}}">
+            <img src="{{this.image}}" alt="" class="col-12">
+          </a>
+          <a href="/restaurants/{{this.id}}">{{this.name}}</a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="col-8 mt-2 p-0">
+      <div class="border col-12 row m-0 ">
+        <span>{{favoritedCount}} 收藏餐廳</span>
+      </div>
+      <div class="border border-top-0  m-0 col-12 row justify-content-center">
+        {{#each user.FavoritedRestaurants}}
+        <div class="col-md-4 mt-2 mb-2 text-center">
+          <a href="/restaurants/{{this.id}}">
+            <img src="{{this.image}}" alt="" class="col-12">
+          </a>
+          <a href="/restaurants/{{this.id}}">{{this.name}}</a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
   </div>
 </div>
