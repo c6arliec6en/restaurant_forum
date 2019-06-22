@@ -1,11 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
-const User = db.User
-const Comment = db.Comment
-const Restaurant = db.Restaurant
-const Favorite = db.Favorite
-const Like = db.Like
-const Followship = db.Followship
+const {User, Comment, Restaurant, Favorite, Like, Followship} = db
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '5d0182421d9b790'
 
@@ -61,8 +56,16 @@ const userControllers = {
       user.Comments.forEach(comment => {
         commentCount += 1
       })
+      let commentRestaurants = []
+      let removeSameObject = {}
+      user.Comments.forEach(a => {
+        removeSameObject[a.Restaurant.id] = a.Restaurant
+      })
+      for (let i in removeSameObject) {
+        commentRestaurants.push(removeSameObject[i])
+      }
 
-      res.render('profile', { user: user, searchBarUserId: searchBarUserId, currentUser: currentUser, commentCount: commentCount })
+      res.render('profile', { user, searchBarUserId, currentUser, commentCount, commentRestaurants })
     })
 
 

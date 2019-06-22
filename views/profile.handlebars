@@ -17,9 +17,13 @@
     <span>{{commentCount}} 已評論餐廳</span>
   </div>
   <div class="border border-top-0 col-md-10 row">
-    {{#each user.Comments}}
-    <div class="col-md-2 mt-4 mb-4"><a href="/restaurants/{{this.Restaurant.id}}"><img src="{{this.Restaurant.image}}"
-          alt="" class="col-12"></a></div>
+    {{#each commentRestaurants}}
+    <div class="col-md-2 mt-4 mb-4 text-center">
+      <a href="/restaurants/{{this.id}}">
+        <img src="{{this.image}}" alt="" class="col-12">
+      </a>
+      <a href="/restaurants/{{this.id}}">{{this.name}}</a>
+    </div>
     {{/each}}
   </div>
 </div>
