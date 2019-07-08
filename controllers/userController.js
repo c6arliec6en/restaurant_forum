@@ -58,7 +58,6 @@ const userControllers = {
       ]
     }).then(user => {
 
-
       let commentRestaurants = []
       let removeSameObject = {}
       user.Comments.forEach(a => {
